@@ -20,26 +20,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.widget.doOnTextChanged
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.sujith.viewmodeldemo.databinding.ActivityMainBinding
 import com.sujith.viewmodeldemo.ui.theme.ViewModelDemoTheme
 
 class MainActivity : ComponentActivity() {
     private lateinit var viewModel: MainActivityViewModel
-
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        setContentView(R.layout.activity_main)
-        val textOut: TextView = findViewById(R.id.sum_txt)
-        val editText: EditText = findViewById(R.id.edit_text)
-        val addBtn: Button = findViewById(R.id.add_btn)
 
-        editText.setText(viewModel.getTextBoxValue())
-        textOut.text = viewModel.getSum().toString()
-        addBtn.setOnClickListener {
-            textOut.text = viewModel.add(viewModel.getTextBoxValue().toInt()).toString()
+
+        binding.editText.setText(viewModel.getTextBoxValue())
+        binding.sumTxt.text = viewModel.getSum().toString()
+        binding.addBtn.setOnClickListener {
+            binding.sumTxt.text = viewModel.add(viewModel.getTextBoxValue().toInt()).toString()
         }
-        editText.doOnTextChanged { text, start, before, count -> viewModel.setTextBoxValue(text.toString()) }
+        binding.editText.doOnTextChanged { text, start, before, count ->
+            viewModel.setTextBoxValue(
+                text.toString()
+            )
+        }
     }
 }
 
