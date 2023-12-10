@@ -28,10 +28,12 @@ import com.sujith.viewmodeldemo.ui.theme.ViewModelDemoTheme
 class MainActivity : ComponentActivity() {
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModelFactory: MainActivityViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        viewModelFactory = MainActivityViewModelFactory(100)
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainActivityViewModel::class.java]
 
 
         binding.editText.setText(viewModel.getTextBoxValue())
