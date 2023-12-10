@@ -34,20 +34,8 @@ class MainActivity : ComponentActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModelFactory = MainActivityViewModelFactory(100)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainActivityViewModel::class.java]
-        viewModel.sumData.observe(this) {
-            binding.sumTxt.text = it.toString()
-        }
-
-        binding.editText.setText(viewModel.getTextBoxValue())
-
-        binding.addBtn.setOnClickListener {
-            viewModel.add(viewModel.getTextBoxValue().toInt())
-        }
-        binding.editText.doOnTextChanged { text, start, before, count ->
-            viewModel.setTextBoxValue(
-                text.toString()
-            )
-        }
+        binding.lifecycleOwner = this@MainActivity
+        binding.myViewModel = viewModel
     }
 }
 

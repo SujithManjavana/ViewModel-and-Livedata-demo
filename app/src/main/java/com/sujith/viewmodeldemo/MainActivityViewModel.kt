@@ -13,18 +13,10 @@ class MainActivityViewModel(startingSum: Int) : ViewModel() {
         sum.value = startingSum
     }
 
-    private var textBoxValue = "0"
+   var textBoxValue = MutableLiveData("0")
 
-
-    fun add(value: Int) {
-        sum.value = (sum.value)?.plus(value)
+    fun add() {
+        sum.value = (sum.value)?.plus(textBoxValue.value!!.toInt())
     }
 
-    fun getTextBoxValue(): String {
-        return textBoxValue
-    }
-
-    fun setTextBoxValue(value: String) {
-        textBoxValue = value
-    }
 }
