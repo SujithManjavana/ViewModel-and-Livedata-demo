@@ -1,22 +1,23 @@
 package com.sujith.viewmodeldemo
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainActivityViewModel(startingSum: Int) : ViewModel() {
-    private var sum = 0
+    private val sum = MutableLiveData<Int>()
+    val sumData: LiveData<Int>
+        get() = sum
 
     init {
-        sum = startingSum
+        sum.value = startingSum
     }
 
     private var textBoxValue = "0"
-    fun getSum(): Int {
-        return sum
-    }
 
-    fun add(value: Int): Int {
-        sum += value
-        return sum;
+
+    fun add(value: Int) {
+        sum.value = (sum.value)?.plus(value)
     }
 
     fun getTextBoxValue(): String {
